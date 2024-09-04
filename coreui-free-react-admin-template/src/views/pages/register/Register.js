@@ -1,0 +1,414 @@
+import React from 'react'
+import {
+  CButton,
+  CCard,
+  CCardBody,
+  CCol,
+  CContainer,
+  CForm,
+  CFormInput,
+  CInputGroup,
+  CInputGroupText,
+  CRow,
+  CFormSelect,
+  CFormTextarea,
+} from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import { useState } from 'react'
+import api from '../../../api'
+import { useNavigate } from 'react-router-dom'
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../../constants'
+
+import {
+  cilBuilding,
+  cilCreditCard,
+  cilLibrary,
+  cilLibraryBuilding,
+  cilLockLocked,
+  cilUser,
+  cilFingerprint,
+} from '@coreui/icons'
+import { useSearchParams } from 'react-router-dom'
+
+const Register = () => {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const type = atob(searchParams.get('type')).trim().normalize()
+
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    gradeLevel: '',
+    phone: '',
+    cpr: '',
+    school: '',
+    munExperience: '',
+    healthIssues: '',
+    allergies: '',
+    sec_1: '',
+    sec_2: '',
+    sec_3: '',
+    run_1: '',
+    run_2: '',
+    cha_1: '',
+    cha_2: '',
+    del_1: '',
+    del_2: '',
+    del_3: '',
+    del_4: '',
+  })
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+      const res = await api.post(route, { username, password })
+      localStorage.setItem(ACCESS_TOKEN, res.data.access)
+      localStorage.setItem(REFRESH_TOKEN, res.data.refresh)
+      navigate('/')
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+  return (
+    <div className="bg-body-tertiary min-vh-200 d-flex flex-row align-items-center">
+      <CContainer>
+        <CRow className="justify-content-center">
+          <CCol md={9} lg={7} xl={6}>
+            <CCard className="mx-4">
+              <CCardBody className="p-4">
+                <CForm onSubmit={handleSubmit}>
+                  <h1>Register</h1>
+                  <p className="text-body-secondary">Register as {type}</p>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText style={{ textWrap: 'wrap' }}>
+                      <CIcon icon={cilUser} />
+                    </CInputGroupText>
+                    <CFormInput
+                      placeholder="Full Name"
+                      name="name"
+                      autoComplete="fullname"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      required
+                    />
+                  </CInputGroup>
+
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText style={{ textWrap: 'wrap' }}>@</CInputGroupText>
+                    <CFormInput
+                      placeholder="Email"
+                      name="email"
+                      autoComplete="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                  </CInputGroup>
+
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText style={{ textWrap: 'wrap' }}>
+                      <CIcon icon={cilLockLocked} />
+                    </CInputGroupText>
+                    <CFormInput
+                      type="number"
+                      id="grade"
+                      name="gradeLevel"
+                      placeholder="Grade Level"
+                      value={formData.gradeLevel}
+                      onChange={handleChange}
+                      required
+                    />
+                  </CInputGroup>
+
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText style={{ textWrap: 'wrap' }}>+973</CInputGroupText>
+                    <CFormInput
+                      placeholder="Phone Number"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      required
+                    />
+                  </CInputGroup>
+
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText style={{ textWrap: 'wrap' }}>
+                      <CIcon icon={cilCreditCard} />
+                    </CInputGroupText>
+                    <CFormInput
+                      placeholder="CPR"
+                      name="cpr"
+                      autoComplete="cpr"
+                      value={formData.cpr}
+                      onChange={handleChange}
+                      required
+                    />
+                  </CInputGroup>
+
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText style={{ textWrap: 'wrap' }}>
+                      <CIcon icon={cilLibraryBuilding} />
+                    </CInputGroupText>
+                    <CFormSelect
+                      aria-label="Default select example"
+                      name="school"
+                      value={formData.school}
+                      onChange={handleChange}
+                    >
+                      <option>Select your school below</option>
+                      <option value="TISoC">The International School of Choueifat</option>
+                      <option value="BSoB">British School of Bahrain</option>
+                      <option value="AIS">AlNaseem International School</option>
+                      <option value="OIS">Orbit International School</option>
+                      <option value="IKNS">Ibn Khuldoon National School</option>
+                      <option value="CPS">Creativity Private School</option>
+                      <option value="SCS">St Christopher's School</option>
+                      <option value="NMS">New Millennium School</option>
+                      <option value="BBS">Bahrain Bayan School</option>
+                      <option value="AS">Alhussan School</option>
+                      <option value="APGS">Arabian Pearl Gulf School</option>
+                      <option value="MKS">Modern Knowledge Schools</option>
+                      <option value="SHGS">Shaikha Hissa Girls School</option>
+                      <option value="BIS">Britus International School</option>
+                      <option value="AKIS">Abdulrahman Kanoo International School</option>
+                      <option value="AHIS">Al Hekma International School</option>
+                      <option value="AIS">Al Iman School</option>
+                      <option value="ANIS">Alnoor International School</option>
+                      <option value="HIS">Hawar International School</option>
+                      <option value="ARPS">Al Rawabi Private School</option>
+                      <option value="OTHER">Other</option>
+                    </CFormSelect>
+                  </CInputGroup>
+
+                  <CInputGroupText style={{ textWrap: 'wrap' }}>
+                    Amount of MUN experiences and awards (if any):
+                  </CInputGroupText>
+                  <CInputGroup className="mb-3">
+                    <CFormTextarea
+                      id="exp"
+                      placeholder="Experiences and Awards..."
+                      rows={2}
+                      name="munExperience"
+                      value={formData.munExperience}
+                      onChange={handleChange}
+                    ></CFormTextarea>
+                  </CInputGroup>
+
+                  <CInputGroupText style={{ textWrap: 'wrap' }}>
+                    Do you have any health issues we should be aware of?
+                  </CInputGroupText>
+                  <CInputGroup className="mb-3">
+                    <CFormTextarea
+                      id="hlth"
+                      placeholder="Health Issues..."
+                      rows={2}
+                      name="healthIssues"
+                      value={formData.healthIssues}
+                      onChange={handleChange}
+                    ></CFormTextarea>
+                  </CInputGroup>
+
+                  <CInputGroupText style={{ textWrap: 'wrap' }}>
+                    Do you have any allergies we should be aware of?
+                  </CInputGroupText>
+                  <CInputGroup className="mb-3">
+                    <CFormTextarea
+                      id="alg"
+                      placeholder="Alergies..."
+                      name="allergies"
+                      rows={2}
+                      value={formData.allergies}
+                      onChange={handleChange}
+                    ></CFormTextarea>
+                  </CInputGroup>
+
+                  {type === 'Security' && (
+                    <>
+                      <CInputGroup className="mb-3">
+                        <CInputGroupText style={{ textWrap: 'wrap' }}>
+                          <CIcon icon={cilFingerprint} />
+                        </CInputGroupText>
+                        <CFormInput type="number" id="id" placeholder="School ID" required />
+                      </CInputGroup>
+                      <CInputGroupText style={{ textWrap: 'wrap' }} name="fitForPos">
+                        Why do you think you are fit for this position?
+                      </CInputGroupText>
+                      <CInputGroup className="mb-3">
+                        <CFormTextarea
+                          name="sec_1"
+                          placeholder="Answer here..."
+                          rows={2}
+                          value={formData.sec_1}
+                          onChange={handleChange}
+                        ></CFormTextarea>
+                      </CInputGroup>
+                      <CInputGroupText style={{ textWrap: 'wrap' }}>
+                        What are some safety procedures you would like to implement into this year's
+                        security team?
+                      </CInputGroupText>
+                      <CInputGroup className="mb-3">
+                        <CFormTextarea
+                          name="sec_2"
+                          placeholder="Answer here..."
+                          rows={2}
+                          value={formData.sec_2}
+                          onChange={handleChange}
+                        ></CFormTextarea>
+                      </CInputGroup>
+                      <CInputGroupText style={{ textWrap: 'wrap' }}>
+                        Why are you interested in the Security role?
+                      </CInputGroupText>
+                      <CInputGroup className="mb-3">
+                        <CFormTextarea
+                          name="sec_3"
+                          placeholder="Answer here..."
+                          rows={2}
+                          value={formData.sec_3}
+                          onChange={handleChange}
+                        ></CFormTextarea>
+                      </CInputGroup>
+                    </>
+                  )}
+
+                  {type === 'Runner' && (
+                    <>
+                      <CInputGroup className="mb-3">
+                        <CInputGroupText style={{ textWrap: 'wrap' }}>
+                          <CIcon icon={cilFingerprint} />
+                        </CInputGroupText>
+                        <CFormInput type="number" id="id" placeholder="School ID" required />
+                      </CInputGroup>
+                      <CInputGroupText style={{ textWrap: 'wrap' }}>
+                        Why do you think you are suitable for this position?
+                      </CInputGroupText>
+                      <CInputGroup className="mb-3">
+                        <CFormTextarea
+                          name="run_1"
+                          placeholder="Answer here..."
+                          rows={2}
+                          value={formData.run_1}
+                          onChange={handleChange}
+                        ></CFormTextarea>
+                      </CInputGroup>
+                      <CInputGroupText style={{ textWrap: 'wrap' }}>
+                        What qualities differentiate you from others applying for this position?
+                      </CInputGroupText>
+                      <CInputGroup className="mb-3">
+                        <CFormTextarea
+                          name="run_2"
+                          placeholder="Answer here..."
+                          rows={2}
+                          value={formData.run_2}
+                          onChange={handleChange}
+                        ></CFormTextarea>
+                      </CInputGroup>
+                    </>
+                  )}
+
+                  {type === 'Chair' && (
+                    <>
+                      <CInputGroupText style={{ textWrap: 'wrap' }}>
+                        What qualities do you possess that make you suitable for this position?
+                      </CInputGroupText>
+                      <CInputGroup className="mb-3">
+                        <CFormTextarea
+                          name="cha_1"
+                          placeholder="Answer here..."
+                          rows={2}
+                          value={formData.cha_1}
+                          onChange={handleChange}
+                        ></CFormTextarea>
+                      </CInputGroup>
+                      <CInputGroupText style={{ textWrap: 'wrap' }}>
+                        What have you learnt from your past MUN experiences?
+                      </CInputGroupText>
+                      <CInputGroup className="mb-3">
+                        <CFormTextarea
+                          name="cha_2"
+                          placeholder="Answer here..."
+                          rows={2}
+                          value={formData.cha_2}
+                          onChange={handleChange}
+                        ></CFormTextarea>
+                      </CInputGroup>
+                    </>
+                  )}
+
+                  {type === 'Delegate' && (
+                    <>
+                      <CInputGroupText style={{ textWrap: 'wrap' }}>
+                        Would you prefer to be in a specialized or general assembly council?
+                      </CInputGroupText>
+                      <CInputGroup className="mb-3">
+                        <CFormTextarea
+                          name="del_1"
+                          placeholder="Answer here..."
+                          rows={2}
+                          value={formData.del_1}
+                          onChange={handleChange}
+                        ></CFormTextarea>
+                      </CInputGroup>
+                      <CInputGroupText style={{ textWrap: 'wrap' }}>
+                        Any other concerns you may have, that would like us to be aware of?
+                        (confidential)
+                      </CInputGroupText>
+                      <CInputGroup className="mb-3">
+                        <CFormTextarea
+                          name="del_2"
+                          placeholder="Answer here..."
+                          rows={2}
+                          value={formData.del_2}
+                          onChange={handleChange}
+                        ></CFormTextarea>
+                      </CInputGroup>
+
+                      <CInputGroup className="mb-3">
+                        <CInputGroupText style={{ textWrap: 'wrap' }}>
+                          <CIcon icon={cilUser} />
+                        </CInputGroupText>
+                        <CFormInput
+                          placeholder="Guardian's Full Name"
+                          autoComplete="guardian fullname"
+                          name="del_3"
+                          value={formData.del_3}
+                          onChange={handleChange}
+                          required
+                        />
+                      </CInputGroup>
+
+                      <CInputGroup className="mb-3">
+                        <CInputGroupText style={{ textWrap: 'wrap' }}>+973</CInputGroupText>
+                        <CFormInput
+                          placeholder="Guardian's Contact Number"
+                          name="del_4"
+                          value={formData.del_4}
+                          onChange={handleChange}
+                          required
+                        />
+                      </CInputGroup>
+                    </>
+                  )}
+
+                  <div className="d-grid">
+                    <CButton color="success">Create Account</CButton>
+                  </div>
+                </CForm>
+              </CCardBody>
+            </CCard>
+          </CCol>
+        </CRow>
+      </CContainer>
+    </div>
+  )
+}
+
+export default Register
