@@ -27,51 +27,86 @@ import {
   cilLockLocked,
   cilUser,
   cilFingerprint,
+  cilImage,
 } from '@coreui/icons'
 import { useSearchParams } from 'react-router-dom'
 
 const Register = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const type = atob(searchParams.get('type')).trim().normalize()
+  const navigate = useNavigate()
+
+  const acceptedTypes = ['Delegate', 'Security', 'Press', 'Chair', 'Runner']
+
+  if (acceptedTypes.indexOf(type) === -1) {
+    navigate('/404')
+  }
 
   const [formData, setFormData] = useState({
+    role: type,
     fullName: '',
     email: '',
     gradeLevel: '',
     phone: '',
     cpr: '',
     school: '',
-    munExperience: '',
-    healthIssues: '',
-    allergies: '',
-    sec_1: '',
-    sec_2: '',
-    sec_3: '',
-    run_1: '',
-    run_2: '',
-    cha_1: '',
-    cha_2: '',
-    del_1: '',
-    del_2: '',
-    del_3: '',
-    del_4: '',
+    additional_data: {
+      munExperience: '',
+      healthIssues: '',
+      allergies: '',
+      sec_1: '',
+      sec_2: '',
+      sec_3: '',
+      sec_4: '',
+      run_1: '',
+      run_2: '',
+      cha_1: '',
+      cha_2: '',
+      del_1: '',
+      del_2: '',
+      del_3: '',
+      del_4: '',
+      pre_1: '',
+      pre_2: '',
+      pre_3: '',
+      pre_4: '',
+    },
   })
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }))
+
+    if (name in formData.additional_data) {
+      setFormData((prevData) => ({
+        ...prevData,
+        additional_data: {
+          ...prevData.additional_data,
+          [name]: value,
+        },
+      }))
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }))
+    }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     try {
-      const res = await api.post(route, { username, password })
-      localStorage.setItem(ACCESS_TOKEN, res.data.access)
-      localStorage.setItem(REFRESH_TOKEN, res.data.refresh)
+      const res = await api.post('api/user_info/register/', {
+        role: formData.role,
+        fullName: formData.fullName,
+        email: formData.email,
+        gradeLevel: formData.gradeLevel,
+        phone: formData.phone,
+        cpr: formData.cpr,
+        school: formData.school,
+        additional_data: formData.additional_data, 
+      })
+      console.log(res.data.id)
       navigate('/')
     } catch (error) {
       alert(error)
@@ -94,7 +129,7 @@ const Register = () => {
                     </CInputGroupText>
                     <CFormInput
                       placeholder="Full Name"
-                      name="name"
+                      name="fullName"
                       autoComplete="fullname"
                       value={formData.fullName}
                       onChange={handleChange}
@@ -198,7 +233,7 @@ const Register = () => {
                       placeholder="Experiences and Awards..."
                       rows={2}
                       name="munExperience"
-                      value={formData.munExperience}
+                      value={formData.additional_data.munExperience}
                       onChange={handleChange}
                     ></CFormTextarea>
                   </CInputGroup>
@@ -212,7 +247,7 @@ const Register = () => {
                       placeholder="Health Issues..."
                       rows={2}
                       name="healthIssues"
-                      value={formData.healthIssues}
+                      value={formData.additional_data.healthIssues}
                       onChange={handleChange}
                     ></CFormTextarea>
                   </CInputGroup>
@@ -226,7 +261,7 @@ const Register = () => {
                       placeholder="Alergies..."
                       name="allergies"
                       rows={2}
-                      value={formData.allergies}
+                      value={formData.additional_data.allergies}
                       onChange={handleChange}
                     ></CFormTextarea>
                   </CInputGroup>
@@ -237,17 +272,25 @@ const Register = () => {
                         <CInputGroupText style={{ textWrap: 'wrap' }}>
                           <CIcon icon={cilFingerprint} />
                         </CInputGroupText>
-                        <CFormInput type="number" id="id" placeholder="School ID" required />
+                        <CFormInput
+                          type="number"
+                          id="id"
+                          placeholder="School ID"
+                          name="sec_1"
+                          value={formData.additional_data.sec_1}
+                          onChange={handleChange}
+                          required
+                        />
                       </CInputGroup>
                       <CInputGroupText style={{ textWrap: 'wrap' }} name="fitForPos">
                         Why do you think you are fit for this position?
                       </CInputGroupText>
                       <CInputGroup className="mb-3">
                         <CFormTextarea
-                          name="sec_1"
+                          name="sec_2"
                           placeholder="Answer here..."
                           rows={2}
-                          value={formData.sec_1}
+                          value={formData.additional_data.sec_2}
                           onChange={handleChange}
                         ></CFormTextarea>
                       </CInputGroup>
@@ -257,10 +300,10 @@ const Register = () => {
                       </CInputGroupText>
                       <CInputGroup className="mb-3">
                         <CFormTextarea
-                          name="sec_2"
+                          name="sec_3"
                           placeholder="Answer here..."
                           rows={2}
-                          value={formData.sec_2}
+                          value={formData.additional_data.sec_3}
                           onChange={handleChange}
                         ></CFormTextarea>
                       </CInputGroup>
@@ -269,10 +312,10 @@ const Register = () => {
                       </CInputGroupText>
                       <CInputGroup className="mb-3">
                         <CFormTextarea
-                          name="sec_3"
+                          name="sec_4"
                           placeholder="Answer here..."
                           rows={2}
-                          value={formData.sec_3}
+                          value={formData.additional_data.sec_4}
                           onChange={handleChange}
                         ></CFormTextarea>
                       </CInputGroup>
@@ -285,17 +328,25 @@ const Register = () => {
                         <CInputGroupText style={{ textWrap: 'wrap' }}>
                           <CIcon icon={cilFingerprint} />
                         </CInputGroupText>
-                        <CFormInput type="number" id="id" placeholder="School ID" required />
+                        <CFormInput
+                          type="number"
+                          id="id"
+                          placeholder="School ID"
+                          name="run_1"
+                          value={formData.additional_data.run_1}
+                          onChange={handleChange}
+                          required
+                        />
                       </CInputGroup>
                       <CInputGroupText style={{ textWrap: 'wrap' }}>
                         Why do you think you are suitable for this position?
                       </CInputGroupText>
                       <CInputGroup className="mb-3">
                         <CFormTextarea
-                          name="run_1"
+                          name="run_2"
                           placeholder="Answer here..."
                           rows={2}
-                          value={formData.run_1}
+                          value={formData.additional_data.run_2}
                           onChange={handleChange}
                         ></CFormTextarea>
                       </CInputGroup>
@@ -304,10 +355,10 @@ const Register = () => {
                       </CInputGroupText>
                       <CInputGroup className="mb-3">
                         <CFormTextarea
-                          name="run_2"
+                          name="run_3"
                           placeholder="Answer here..."
                           rows={2}
-                          value={formData.run_2}
+                          value={formData.additional_data.run_3}
                           onChange={handleChange}
                         ></CFormTextarea>
                       </CInputGroup>
@@ -324,7 +375,7 @@ const Register = () => {
                           name="cha_1"
                           placeholder="Answer here..."
                           rows={2}
-                          value={formData.cha_1}
+                          value={formData.additional_data.cha_1}
                           onChange={handleChange}
                         ></CFormTextarea>
                       </CInputGroup>
@@ -336,7 +387,7 @@ const Register = () => {
                           name="cha_2"
                           placeholder="Answer here..."
                           rows={2}
-                          value={formData.cha_2}
+                          value={formData.additional_data.cha_2}
                           onChange={handleChange}
                         ></CFormTextarea>
                       </CInputGroup>
@@ -353,7 +404,7 @@ const Register = () => {
                           name="del_1"
                           placeholder="Answer here..."
                           rows={2}
-                          value={formData.del_1}
+                          value={formData.additional_data.del_1}
                           onChange={handleChange}
                         ></CFormTextarea>
                       </CInputGroup>
@@ -366,7 +417,7 @@ const Register = () => {
                           name="del_2"
                           placeholder="Answer here..."
                           rows={2}
-                          value={formData.del_2}
+                          value={formData.additional_data.del_2}
                           onChange={handleChange}
                         ></CFormTextarea>
                       </CInputGroup>
@@ -379,7 +430,7 @@ const Register = () => {
                           placeholder="Guardian's Full Name"
                           autoComplete="guardian fullname"
                           name="del_3"
-                          value={formData.del_3}
+                          value={formData.additional_data.del_3}
                           onChange={handleChange}
                           required
                         />
@@ -390,7 +441,7 @@ const Register = () => {
                         <CFormInput
                           placeholder="Guardian's Contact Number"
                           name="del_4"
-                          value={formData.del_4}
+                          value={formData.additional_data.del_4}
                           onChange={handleChange}
                           required
                         />
@@ -398,8 +449,77 @@ const Register = () => {
                     </>
                   )}
 
+                  {type === 'Press' && (
+                    <>
+                      <CInputGroupText style={{ textWrap: 'wrap' }}>
+                        Amount of PRESS experiences (if any):
+                      </CInputGroupText>
+                      <CInputGroup className="mb-3">
+                        <CFormTextarea
+                          id="exp"
+                          placeholder="Experiences as Press..."
+                          rows={2}
+                          name="pre_1"
+                          value={formData.additional_data.pre_1}
+                          onChange={handleChange}
+                        ></CFormTextarea>
+                      </CInputGroup>
+
+                      <CInputGroupText style={{ textWrap: 'wrap' }}>
+                        Why do you want to join the press team?
+                      </CInputGroupText>
+                      <CInputGroup className="mb-3">
+                        <CFormTextarea
+                          name="pre_2"
+                          placeholder="Answer here..."
+                          rows={2}
+                          value={formData.additional_data.pre_2}
+                          onChange={handleChange}
+                        ></CFormTextarea>
+                      </CInputGroup>
+
+                      <CInputGroupText style={{ textWrap: 'wrap' }}>
+                        What distinguishes you from other press applicants?
+                      </CInputGroupText>
+                      <CInputGroup className="mb-3">
+                        <CFormTextarea
+                          name="pre_3"
+                          placeholder="Answer here..."
+                          rows={2}
+                          value={formData.additional_data.pre_3}
+                          onChange={handleChange}
+                        ></CFormTextarea>
+                      </CInputGroup>
+
+                      <CInputGroupText style={{ textWrap: 'wrap' }}>
+                        What does photography mean to you?
+                      </CInputGroupText>
+                      <CInputGroup className="mb-3">
+                        <CFormTextarea
+                          name="pre_4"
+                          placeholder="Answer here..."
+                          rows={2}
+                          value={formData.additional_data.pre_4}
+                          onChange={handleChange}
+                        ></CFormTextarea>
+                      </CInputGroup>
+
+                      <CInputGroupText style={{ textWrap: 'wrap' }}>
+                        Upload 4 photos (preferably past MUN photos)
+                      </CInputGroupText>
+                      <CInputGroup className="mb-3">
+                        <CInputGroupText style={{ textWrap: 'wrap' }}>
+                          <CIcon icon={cilImage} />
+                        </CInputGroupText>
+                        <CFormInput type="file" id="formFileMultiple" multiple />
+                      </CInputGroup>
+                    </>
+                  )}
+
                   <div className="d-grid">
-                    <CButton color="success">Create Account</CButton>
+                    <CButton color="success" type="submit">
+                      Create Account
+                    </CButton>
                   </div>
                 </CForm>
               </CCardBody>
