@@ -92,6 +92,14 @@ const Register = () => {
     }
   }
 
+  const description_dictionary = {
+    Delegate:
+      'BAYMUN XVII will be held on <b>November 22 & 23, 2024</b> <br>It is MANDATORY that delegates attend the conference on both days <br>DEADLINE for registration is on <b>November 8th, 2024</b><br>If your school name is not available and you are looking forward to attending our conference, please reach out to us',
+    Security: '',
+    Runner: '',
+    Chair: '',
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -104,10 +112,11 @@ const Register = () => {
         phone: formData.phone,
         cpr: formData.cpr,
         school: formData.school,
-        additional_data: formData.additional_data, 
+        additional_data: formData.additional_data,
       })
-      console.log(res.data.id)
-      navigate('/')
+      const number = res.data.id
+      const padded_id = number.toString().padStart(4, '0')
+      navigate('/confirm?id=' + padded_id)
     } catch (error) {
       alert(error)
     }
@@ -123,6 +132,12 @@ const Register = () => {
                 <CForm onSubmit={handleSubmit}>
                   <h1>Register</h1>
                   <p className="text-body-secondary">Register as {type}</p>
+
+                  <p
+                    className="text-body-secondary"
+                    dangerouslySetInnerHTML={{ __html: description_dictionary[type] }}
+                  />
+
                   <CInputGroup className="mb-3">
                     <CInputGroupText style={{ textWrap: 'wrap' }}>
                       <CIcon icon={cilUser} />
@@ -200,27 +215,26 @@ const Register = () => {
                       onChange={handleChange}
                     >
                       <option>Select your school below</option>
-                      <option value="TISoC">The International School of Choueifat</option>
-                      <option value="BSoB">British School of Bahrain</option>
                       <option value="AIS">AlNaseem International School</option>
-                      <option value="OIS">Orbit International School</option>
-                      <option value="IKNS">Ibn Khuldoon National School</option>
-                      <option value="CPS">Creativity Private School</option>
-                      <option value="SCS">St Christopher's School</option>
-                      <option value="NMS">New Millennium School</option>
-                      <option value="BBS">Bahrain Bayan School</option>
                       <option value="AS">Alhussan School</option>
                       <option value="APGS">Arabian Pearl Gulf School</option>
-                      <option value="MKS">Modern Knowledge Schools</option>
-                      <option value="SHGS">Shaikha Hissa Girls School</option>
-                      <option value="BIS">Britus International School</option>
                       <option value="AKIS">Abdulrahman Kanoo International School</option>
                       <option value="AHIS">Al Hekma International School</option>
                       <option value="AIS">Al Iman School</option>
                       <option value="ANIS">Alnoor International School</option>
-                      <option value="HIS">Hawar International School</option>
                       <option value="ARPS">Al Rawabi Private School</option>
-                      <option value="OTHER">Other</option>
+                      <option value="BSoB">British School of Bahrain</option>
+                      <option value="BBS">Bahrain Bayan School</option>
+                      <option value="BIS">Britus International School</option>
+                      <option value="CPS">Creativity Private School</option>
+                      <option value="HIS">Hawar International School</option>
+                      <option value="IKNS">Ibn Khuldoon National School</option>
+                      <option value="MKS">Modern Knowledge Schools</option>
+                      <option value="NMS">New Millennium School</option>
+                      <option value="OIS">Orbit International School</option>
+                      <option value="SCS">St Christopher's School</option>
+                      <option value="SHGS">Shaikha Hissa Girls School</option>
+                      <option value="TISoC">The International School of Choueifat</option>
                     </CFormSelect>
                   </CInputGroup>
 
@@ -518,7 +532,7 @@ const Register = () => {
 
                   <div className="d-grid">
                     <CButton color="success" type="submit">
-                      Create Account
+                      Register
                     </CButton>
                   </div>
                 </CForm>

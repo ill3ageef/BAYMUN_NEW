@@ -1,10 +1,11 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth import models as auth_models
+import uuid
 
 
 class UserManager(auth_models.BaseUserManager):
-    def create_user(self, first_name, last_name, email, password=None):
+    def create_user(self, first_name, last_name, email, is_superuser=False, is_staff=False, password=None):
         if not email:
             raise ValueError("User must have an email")
 
@@ -15,15 +16,20 @@ class UserManager(auth_models.BaseUserManager):
         user.user_name = None
         user.first_name = first_name
         user.last_name = last_name
+        user.is_superuser = is_superuser
+        user.is_staff = is_staff
         user.set_password(password)
         user.save()
 
         return user
     
-    def create_superuser(self, name, role, email, password):
+    def create_superuser(self, first_name, last_name, email, password):
         user = self.create_user(
-            name=name,
+            first_name=first_name,
+            last_name=last_name,
             email=email,
+            is_superuser=True,
+            is_staff=True,
             password=password,
         )
 
@@ -39,7 +45,8 @@ class User(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
 
-    is_superuser = models.BooleanField()
+    is_superuser = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
     delegation = models.CharField(max_length=150, blank=True)
     
 
@@ -52,6 +59,19 @@ class User(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
 
     def __str__(self):
         return self.user_name
+    
+
+
+
+class UserInfo(models.Model):
+    role = models.CharField(max_length=100)
+    fullName = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    gradeLevel = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
+    cpr = models.CharField(max_length=100)
+    school = models.CharField(max_length=100)
+    additional_data = models.JSONField(default=dict)
 
 
 
@@ -71,7 +91,7 @@ class Council(models.Model):
     name = models.CharField(max_length=100)
     content = models.TextField()
 
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notes")
+    # author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notes")
 
     def __str__(self):
         return self.title
