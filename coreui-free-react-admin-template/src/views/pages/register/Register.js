@@ -104,6 +104,8 @@ const Register = () => {
     e.preventDefault()
 
     try {
+      const csrf = await api.get("api/csrf");
+      //setCsrfToken(csrf.data.csrfToken);
       const res = await api.post('api/user_info/register/', {
         role: formData.role,
         fullName: formData.fullName,
@@ -113,7 +115,7 @@ const Register = () => {
         cpr: formData.cpr,
         school: formData.school,
         additional_data: formData.additional_data,
-      })
+      }, {headers: {"X-CSRFToken": csrf.data.csrfToken}})
       const number = res.data.id
       const padded_id = number.toString().padStart(4, '0')
       navigate('/confirm?id=' + padded_id)
@@ -217,6 +219,7 @@ const Register = () => {
                       <option>Select your school below</option>
                       <option value="AIS">AlNaseem International School</option>
                       <option value="AS">Alhussan School</option>
+                      <option value="ASoB">American School of Bahrain</option>
                       <option value="APGS">Arabian Pearl Gulf School</option>
                       <option value="AKIS">Abdulrahman Kanoo International School</option>
                       <option value="AHIS">Al Hekma International School</option>
@@ -225,6 +228,7 @@ const Register = () => {
                       <option value="ARPS">Al Rawabi Private School</option>
                       <option value="BSoB">British School of Bahrain</option>
                       <option value="BBS">Bahrain Bayan School</option>
+                      <option value="BPS">Beacon Private School</option>
                       <option value="BIS">Britus International School</option>
                       <option value="CPS">Creativity Private School</option>
                       <option value="HIS">Hawar International School</option>
@@ -232,8 +236,10 @@ const Register = () => {
                       <option value="MKS">Modern Knowledge Schools</option>
                       <option value="NMS">New Millennium School</option>
                       <option value="OIS">Orbit International School</option>
+                      <option value="RVIS">Riffa Views International School</option>
                       <option value="SCS">St Christopher's School</option>
                       <option value="SHGS">Shaikha Hissa Girls School</option>
+                      <option value="TIS">The Indian School</option>
                       <option value="TISoC">The International School of Choueifat</option>
                     </CFormSelect>
                   </CInputGroup>

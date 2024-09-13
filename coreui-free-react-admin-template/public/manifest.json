@@ -1,10 +1,10 @@
 {
-  "short_name": "CoreUI-React",
-  "name": "CoreUI-React sample",
+  "short_name": "BayMUN",
+  "name": "BayMUN - XVII",
   "icons": [
     {
       "src": "./assets/img/favicon.png",
-      "sizes": "100x100",
+      "sizes": "150x150",
       "type": "image/png"
     }
   ],

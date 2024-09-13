@@ -19,10 +19,11 @@ class UserInfoSerializer(serializers.ModelSerializer):
         extra_kwargs = {"email": {"required": True}}
 
     def create(self, validated_data):
-        print("hey")
         additional_data = validated_data.pop('additional_data', {})
-        user_info = UserInfo.objects.create(**validated_data, additional_data=additional_data)
-        return user_info
+        instance = UserInfo.objects.create(**validated_data)
+        instance.additional_data = additional_data
+        instance.save()
+        return instance
     
 
 class NoteSerializer(serializers.ModelSerializer):

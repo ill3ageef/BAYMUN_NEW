@@ -3,6 +3,15 @@ from rest_framework import generics
 from .serializers import UserSerializer, NoteSerializer, UserInfoSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Note, User, UserInfo
+from django.middleware.csrf import get_token
+from django.http import JsonResponse
+
+def get_csrf_token(request):
+    csrf_token = get_token(request)
+    return JsonResponse({'csrfToken': csrf_token})
+
+
+
 
 class NoteListCreate(generics.ListCreateAPIView):
     serializer_class = NoteSerializer
