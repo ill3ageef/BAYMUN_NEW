@@ -230,6 +230,7 @@ const Register = () => {
                       <option value="BBS">Bahrain Bayan School</option>
                       <option value="BPS">Beacon Private School</option>
                       <option value="BIS">Britus International School</option>
+                      <option value="CSB">Canadian School Bahrain</option>
                       <option value="CPS">Creativity Private School</option>
                       <option value="HIS">Hawar International School</option>
                       <option value="IKNS">Ibn Khuldoon National School</option>
