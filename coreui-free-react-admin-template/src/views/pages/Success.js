@@ -27,7 +27,7 @@ const Success = () => {
             <span className="clearfix">
               <h1 className="display-5 me-3">Ref: BAYMUN2411{id}</h1>
               <h4 className="pt-3">Success! Please complete your registration by paying through BenefitPay:</h4>
-              <h5>Use the given reference as the transaction description</h5>
+              <h5>Use the reference number given above and put your full name in your transaction description</h5>
               <p className="display-6">IBAN: BH31GULF00039900007006</p>
               <p className="display-6" style={{"text-align":"center"}}>Amount: BD22</p>
               <img src={base64Image} width="100%"/>
