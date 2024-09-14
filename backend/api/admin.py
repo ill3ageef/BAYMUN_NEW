@@ -3,9 +3,10 @@ from .models import UserInfo
 
 @admin.register(UserInfo)
 class UserInfoAdmin(admin.ModelAdmin):
-    list_display = ('fullName', 'role', 'email', 'gradeLevel', 'school', 'phone', 'cpr', 'display_additional_data')
+    list_display = ('id', 'fullName', 'role', 'email', 'gradeLevel', 'school', 'phone', 'cpr', 'padded_id', 'display_additional_data')
     
     list_filter = ('role', 'gradeLevel', 'school')
+    fields = ('fullName', 'role', 'email', 'gradeLevel', 'school', 'phone', 'cpr', 'padded_id')
     
     search_fields = ('fullName', 'email', 'phone', 'cpr')
     

@@ -73,6 +73,17 @@ class UserInfo(models.Model):
     school = models.CharField(max_length=100)
     additional_data = models.JSONField(default=dict)
 
+    #additional fields
+    has_payed = models.BooleanField(default=False)
+    padded_id = models.CharField(max_length=100, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.padded_id:  # Sets if first created
+            self.padded_id = f'BAYMUN2411{str(self.id).zfill(4)}'  
+        super(UserInfo, self).save(*args, **kwargs)
+
+
+
 
 
 #Will remove -- was only part of testing
