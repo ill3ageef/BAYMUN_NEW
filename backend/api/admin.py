@@ -5,7 +5,7 @@ from .models import UserInfo
 class UserInfoAdmin(admin.ModelAdmin):
     list_display = ('id', 'fullName', 'role', 'email', 'gradeLevel', 'school', 'phone', 'padded_id', 'has_payed')
     list_filter = ('role', 'gradeLevel', 'school')
-    list_editable = ("has_payed")
+    list_editable = ("has_payed",)
     
     search_fields = ('fullName', 'email', 'phone', 'cpr')
 
