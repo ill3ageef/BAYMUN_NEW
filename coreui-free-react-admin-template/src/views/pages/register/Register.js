@@ -180,6 +180,7 @@ const Register = () => {
                       required
                     />
                   </CInputGroup>
+                    <p className="text-body-secondary">Note: Grades 9-12 only! (and 8th graders from BBS)</p>
 
                   <CInputGroup className="mb-3">
                     <CInputGroupText style={{ textWrap: 'wrap' }}>+973</CInputGroupText>
