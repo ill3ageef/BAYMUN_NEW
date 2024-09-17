@@ -175,6 +175,8 @@ const Register = () => {
                       id="grade"
                       name="gradeLevel"
                       placeholder="Grade Level"
+                      min="8"
+                      max="12"
                       value={formData.gradeLevel}
                       onChange={handleChange}
                       required
