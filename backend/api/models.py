@@ -40,7 +40,7 @@ class UserManager(auth_models.BaseUserManager):
 class User(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
 
     email = models.EmailField(unique=True)
-    user_name = None
+    user_name = models.CharField(max_length=150, unique=True, blank=True)
     password = models.CharField(max_length=255)
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
@@ -48,8 +48,6 @@ class User(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     delegation = models.CharField(max_length=150, blank=True)
-    
-
 
 
     objects = UserManager()
@@ -58,7 +56,7 @@ class User(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def __str__(self):
-        return self.user_name
+        return self.email
     
 
 
