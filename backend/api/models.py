@@ -75,12 +75,6 @@ class UserInfo(models.Model):
 
     #additional fields
     has_payed = models.BooleanField(default=False)
-    padded_id = models.CharField(max_length=100, blank=True)
-
-    def save(self, *args, **kwargs):
-        if not self.padded_id:  # Sets if first created
-            self.padded_id = f'BAYMUN2411{str(self.id).zfill(4)}'  
-        super(UserInfo, self).save(*args, **kwargs)
 
 
 

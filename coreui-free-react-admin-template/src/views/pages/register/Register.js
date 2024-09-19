@@ -62,6 +62,7 @@ const Register = () => {
       run_2: '',
       cha_1: '',
       cha_2: '',
+      cha_3: '',
       del_1: '',
       del_2: '',
       del_3: '',
@@ -170,18 +171,21 @@ const Register = () => {
                     <CInputGroupText style={{ textWrap: 'wrap' }}>
                       <CIcon icon={cilLockLocked} />
                     </CInputGroupText>
-                    <CFormInput
-                      type="number"
-                      id="grade"
+                    <CFormSelect
+                      aria-label="Select Grade Level"
                       name="gradeLevel"
-                      placeholder="Grade Level"
-                      min="8"
-                      max="12"
                       value={formData.gradeLevel}
                       onChange={handleChange}
-                      required
-                    />
+                    >
+                      <option value="8">Grade 8 - Only for Bayan Students</option>
+                      <option value="9">Grade 9</option>
+                      <option value="10">Grade 10</option>
+                      <option value="11">Grade 11</option>
+                      <option value="12">Grade 12</option>
+                    </CFormSelect>
                   </CInputGroup>
+
+              
                     <p className="text-body-secondary">Note: Grades 9-12 only! (and 8th graders from BBS)</p>
 
                   <CInputGroup className="mb-3">
@@ -403,6 +407,7 @@ const Register = () => {
                           onChange={handleChange}
                         ></CFormTextarea>
                       </CInputGroup>
+
                       <CInputGroupText style={{ textWrap: 'wrap' }}>
                         What have you learnt from your past MUN experiences?
                       </CInputGroupText>
@@ -412,6 +417,19 @@ const Register = () => {
                           placeholder="Answer here..."
                           rows={2}
                           value={formData.additional_data.cha_2}
+                          onChange={handleChange}
+                        ></CFormTextarea>
+                      </CInputGroup>
+
+                      <CInputGroupText style={{ textWrap: 'wrap' }}>
+                        Would you like to chair an Arabic or English council?
+                      </CInputGroupText>
+                      <CInputGroup className="mb-3">
+                        <CFormTextarea
+                          name="cha_3"
+                          placeholder="Answer here..."
+                          rows={2}
+                          value={formData.additional_data.cha_3}
                           onChange={handleChange}
                         ></CFormTextarea>
                       </CInputGroup>
