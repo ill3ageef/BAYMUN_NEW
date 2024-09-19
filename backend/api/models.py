@@ -13,7 +13,6 @@ class UserManager(auth_models.BaseUserManager):
             raise ValueError("User must have a first name")
         
         user = self.model(email=self.normalize_email(email))
-        user.user_name = None
         user.first_name = first_name
         user.last_name = last_name
         user.is_superuser = is_superuser
@@ -40,7 +39,6 @@ class UserManager(auth_models.BaseUserManager):
 class User(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
 
     email = models.EmailField(unique=True)
-    user_name = models.CharField(max_length=150, unique=True, blank=True)
     password = models.CharField(max_length=255)
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
