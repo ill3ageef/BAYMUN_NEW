@@ -47,6 +47,9 @@ class User(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     delegation = models.CharField(max_length=150, blank=True)
 
+    is_active = models.BooleanField(default=True)
+    date_joined = models.DateTimeField(default=timezone.now)
+
 
     objects = UserManager()
 
