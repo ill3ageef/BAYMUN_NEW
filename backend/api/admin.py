@@ -37,4 +37,4 @@ class UserInfoAdmin(admin.ModelAdmin):
     
     search_fields = ('has_payed','baymun_id','fullName', 'email', 'phone', 'cpr')
 
-    ordering = ('fullName', 'role', 'gradeLevel')
+    ordering = ('id','fullName', 'role', 'gradeLevel')
