@@ -80,6 +80,6 @@ class UserInfoAdmin(admin.ModelAdmin):
     list_filter = ('role', 'gradeLevel', 'school')
     list_editable = ("has_payed",)
     
-    search_fields = ('fullName', 'email', 'phone', 'cpr')
+    search_fields = ('has_payed','baymun_id','fullName', 'email', 'phone', 'cpr')
 
     ordering = ('id','fullName', 'role', 'gradeLevel')
