@@ -49,8 +49,14 @@ const App = () => {
           <Route exact path="/404" name="Page 404" element={<Page404 />} />
           <Route exact path="/300" name="Page 500" element={<Page500 />} />
           <Route exact path="/500" name="Page 500" element={<Page500 />} />
+
+
     
           <Route path="*" element={<Navigate to="/register?type=RGVsZWdhdGUK" replace />} />
+          <Route path="/register/delegate" element={<Navigate to="/register?type=RGVsZWdhdGUK" replace />} />
+          <Route path="/register/security" element={<Navigate to="/register?type=RGVsZWdhdGUK" replace />} />
+          <Route path="/register/press" element={<Navigate to="/register?type=RGVsZWdhdGUK" replace />} />
+          <Route path="/register/chair" element={<Navigate to="/register?type=RGVsZWdhdGUK" replace />} />
         </Routes>
       </Suspense>
     </HashRouter>
