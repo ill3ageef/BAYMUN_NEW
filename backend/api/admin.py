@@ -26,6 +26,51 @@ class UserAdmin(BaseUserAdmin):
 @admin.register(UserInfo)
 class UserInfoAdmin(admin.ModelAdmin):
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        user = request.user
+        filters = []
+        if user.has_perm('api.can_view_delegate'):
+            filters.append('Delegate')
+        if user.has_perm('api.can_view_chair'):
+            filters.append('Chair')
+        if user.has_perm('api.can_view_security'):
+            filters.append('Security')
+        if filters:
+            return qs.filter(role__in=filters)
+        return qs.none()
+
+    def has_change_permission(self, request, obj=None):
+        user = request.user
+        if user.is_superuser:
+            return True
+        if obj is not None:
+            if user.has_perm('api.can_edit_delegate') and obj.role == 'Delegate':
+                return True
+            if user.has_perm('api.can_edit_chair') and obj.role == 'Chair':
+                return True
+            if user.has_perm('api.can_edit_security') and obj.role == 'Security':
+                return True
+        return False
+
+    def has_add_permission(self, request):
+        user = request.user
+        return user.is_superuser or user.has_perm('api.can_add_userinfo')
+
+    def has_delete_permission(self, request, obj=None):
+        user = request.user
+        if user.is_superuser:
+            return True
+        if obj is not None:
+            if user.has_perm('api.can_delete_delegate') and obj.role == 'Delegate':
+                return True
+            if user.has_perm('api.can_delete_chair') and obj.role == 'Chair':
+                return True
+            if user.has_perm('api.can_delete_security') and obj.role == 'Security':
+                return True
+        return False
+    
+
     def baymun_id(self, obj):
         return f"BAYMUN2411{obj.id:04d}"
 
