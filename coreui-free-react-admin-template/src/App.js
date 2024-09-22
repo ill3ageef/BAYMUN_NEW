@@ -59,6 +59,7 @@ const App = () => {
           <Route path="/register/security/" element={<Navigate to="/register?type=U2VjdXJpdHk" replace />} />
           <Route path="/register/press/" element={<Navigate to="/register?type=UHJlc3M" replace />} />
           <Route path="/register/chair/" element={<Navigate to="/register?type=Q2hhaXI" replace />} />
+          <Route path="/register/runner/" element={<Navigate to="/register?type=UnVubmVy" replace />} />
         </Routes>
       </Suspense>
     </HashRouter>
