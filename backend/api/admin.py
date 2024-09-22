@@ -89,3 +89,5 @@ class UserInfoAdmin(admin.ModelAdmin):
     search_fields = ('has_payed','baymun_id','fullName', 'email', 'phone', 'cpr')
 
     ordering = ('id','fullName', 'role', 'gradeLevel')
+
+admin.site.site_header = "BayMUN XVII Admin"
