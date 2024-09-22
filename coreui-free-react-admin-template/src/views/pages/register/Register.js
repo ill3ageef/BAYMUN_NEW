@@ -96,9 +96,18 @@ const Register = () => {
   const description_dictionary = {
     Delegate:
       'BAYMUN XVII will be held on <b>November 22 & 23, 2024</b> <br>It is MANDATORY that delegates attend the conference on both days <br>DEADLINE for registration is on <b>November 8th, 2024</b><br>If your school name is not available and you are looking forward to attending our conference, please reach out to us',
-    Security: '',
-    Runner: '',
-    Chair: '',
+    Security: 'BAYMUN XVII will be held on <b>November 22 & 23, 2024</b><br>DEADLINE for registration is on <b>October 17th, 2024</b><br>If your school name is not available and you are looking forward to attending our conference, please reach out to us',
+    Runner: 'BAYMUN XVII will be held on <b>November 22 & 23, 2024</b><br>DEADLINE for registration is on <b>October 17th, 2024</b><br>If your school name is not available and you are looking forward to attending our conference, please reach out to us',
+    Chair: 'BAYMUN XVII will be held on <b>November 22 & 23, 2024</b><br>DEADLINE for registration is on <b>October 20th, 2024</b><br>If your school name is not available and you are looking forward to attending our conference, please reach out to us',
+    Press: 'BAYMUN XVII will be held on <b>November 22 & 23, 2024</b><br>DEADLINE for registration is on <b>October 20th, 2024</b><br>If your school name is not available and you are looking forward to attending our conference, please reach out to us',
+  }
+
+  const message_desciption = {
+    Delegate: 'Note: Grades 9-12 only! (and 8th graders from BBS)',
+    Security: 'Note: Only for Grade 12!',
+    Runner: 'Note: Grades 10-12 only!',
+    Chair: 'Note: Grades 10-12 only!',
+    Press: 'Note: Grades 10-12 only!',
   }
 
   const handleSubmit = async (e) => {
@@ -195,9 +204,8 @@ const Register = () => {
                     </CFormSelect>
                   </CInputGroup>
 
-                  <p className="text-body-secondary">
-                    Note: Grades 9-12 only! (and 8th graders from BBS)
-                  </p>
+
+                  <p className="text-body-secondary" dangerouslySetInnerHTML={{ __html: description_dictionary[type] }}></p>
 
                   <CInputGroup className="mb-3">
                     <CInputGroupText style={{ textWrap: 'wrap' }}>+973</CInputGroupText>
