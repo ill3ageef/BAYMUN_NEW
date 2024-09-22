@@ -603,7 +603,7 @@ const Register = () => {
                         <CFormInput type="file" id="formFileMultiple" multiple />
                       </CInputGroup> */}
 
-                      <p className="text-body-secondary">Note: Please email <b>4</b> photos (try to add MUN photos if you have any) to <a href='mailto:baymun@bayanschool.edu.bh'>baymun@bayanschool.edu.bh</a></p>
+                      <p className="text-body-secondary">Note: Please email <b>4</b> photos (try to add MUN photos if you have any) to <a href='mailto: baymun@bayanschool.edu.bh'>baymun@bayanschool.edu.bh</a></p>
                     </>
                   )}
 
