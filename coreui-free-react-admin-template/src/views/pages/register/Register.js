@@ -146,7 +146,7 @@ const Register = () => {
         { headers: { 'X-CSRFToken': csrf.data.csrfToken } },
       )
 
-      if (['Chair', 'Security', 'Press'].indexOf(type) != -1) {
+      if (['Chair', 'Security', 'Press', "Runner"].indexOf(type) != -1) {
         navigate('/success')
       } else {
         const number = res.data.id
