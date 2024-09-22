@@ -96,10 +96,14 @@ const Register = () => {
   const description_dictionary = {
     Delegate:
       'BAYMUN XVII will be held on <b>November 22 & 23, 2024</b> <br>It is MANDATORY that delegates attend the conference on both days <br>DEADLINE for registration is on <b>November 8th, 2024</b><br>If your school name is not available and you are looking forward to attending our conference, please reach out to us',
-    Security: 'BAYMUN XVII will be held on <b>November 22 & 23, 2024</b><br>DEADLINE for registration is on <b>October 17th, 2024</b><br>If your school name is not available and you are looking forward to attending our conference, please reach out to us',
-    Runner: 'BAYMUN XVII will be held on <b>November 22 & 23, 2024</b><br>DEADLINE for registration is on <b>October 17th, 2024</b><br>If your school name is not available and you are looking forward to attending our conference, please reach out to us',
-    Chair: 'BAYMUN XVII will be held on <b>November 22 & 23, 2024</b><br>DEADLINE for registration is on <b>October 20th, 2024</b><br>If your school name is not available and you are looking forward to attending our conference, please reach out to us',
-    Press: 'BAYMUN XVII will be held on <b>November 22 & 23, 2024</b><br>DEADLINE for registration is on <b>October 20th, 2024</b><br>If your school name is not available and you are looking forward to attending our conference, please reach out to us',
+    Security:
+      'BAYMUN XVII will be held on <b>November 22 & 23, 2024</b><br>DEADLINE for registration is on <b>October 17th, 2024</b>',
+    Runner:
+      'BAYMUN XVII will be held on <b>November 22 & 23, 2024</b><br>DEADLINE for registration is on <b>October 17th, 2024</b>',
+    Chair:
+      'BAYMUN XVII will be held on <b>November 22 & 23, 2024</b><br>DEADLINE for registration is on <b>October 20th, 2024</b><br>If your school name is not available and you are looking forward to attending our conference, please reach out to us',
+    Press:
+      'BAYMUN XVII will be held on <b>November 22 & 23, 2024</b><br>DEADLINE for registration is on <b>October 20th, 2024</b><br>If your school name is not available and you are looking forward to attending our conference, please reach out to us',
   }
 
   const message_desciption = {
@@ -116,23 +120,34 @@ const Register = () => {
     try {
       const csrf = await api.get('api/csrf')
       //setCsrfToken(csrf.data.csrfToken);
+
+      const gradeLevel_temp = formData.gradeLevel
+      const school_temp = formData.school
+
+      if (gradeLevel_temp === '') {
+        gradeLevel_temp = '12'
+      }
+      if (school_temp === '') {
+        school_temp = 'BBS'
+      }
+
       const res = await api.post(
         'api/user_info/register/',
         {
           role: formData.role,
           fullName: formData.fullName,
           email: formData.email,
-          gradeLevel: formData.gradeLevel,
+          gradeLevel: gradeLevel_temp,
           phone: formData.phone,
           cpr: formData.cpr,
-          school: formData.school,
+          school: school_temp,
           additional_data: formData.additional_data,
         },
         { headers: { 'X-CSRFToken': csrf.data.csrfToken } },
       )
 
       if (['Chair', 'Security', 'Press'].indexOf(type) != -1) {
-        navigate("/success")
+        navigate('/success')
       } else {
         const number = res.data.id
         const padded_id = number.toString().padStart(4, '0')
@@ -185,27 +200,38 @@ const Register = () => {
                     />
                   </CInputGroup>
 
-                  <CInputGroup className="mb-3">
-                    <CInputGroupText style={{ textWrap: 'wrap' }}>
-                      <CIcon icon={cilLockLocked} />
-                    </CInputGroupText>
-                    <CFormSelect
-                      aria-label="Select Grade Level"
-                      name="gradeLevel"
-                      value={formData.gradeLevel}
-                      onChange={handleChange}
-                    >
-                      <option>Select your grade level below</option>
-                      <option value="8">Grade 8 - Only for Bayan Students</option>
-                      <option value="9">Grade 9</option>
-                      <option value="10">Grade 10</option>
-                      <option value="11">Grade 11</option>
-                      <option value="12">Grade 12</option>
-                    </CFormSelect>
-                  </CInputGroup>
+                  {type != 'Security' && (
+                    <>
+                      <CInputGroup className="mb-3">
+                        <CInputGroupText style={{ textWrap: 'wrap' }}>
+                          <CIcon icon={cilLockLocked} />
+                        </CInputGroupText>
+                        <CFormSelect
+                          aria-label="Select Grade Level"
+                          name="gradeLevel"
+                          value={formData.gradeLevel}
+                          onChange={handleChange}
+                        >
+                          <option>Select your grade level below</option>
+                          {['Chair', 'Press'].indexOf(type) != -1 && (
+                            <>
+                              <option value="8">Grade 8 - Only for Bayan Students</option>
+                              <option value="9">Grade 9</option>
+                            </>
+                          )}
 
+                          <option value="10">Grade 10</option>
+                          <option value="11">Grade 11</option>
+                          <option value="12">Grade 12</option>
+                        </CFormSelect>
+                      </CInputGroup>
+                    </>
+                  )}
 
-                  <p className="text-body-secondary" dangerouslySetInnerHTML={{ __html: message_desciption[type] }}></p>
+                  <p
+                    className="text-body-secondary"
+                    dangerouslySetInnerHTML={{ __html: message_desciption[type] }}
+                  ></p>
 
                   <CInputGroup className="mb-3">
                     <CInputGroupText style={{ textWrap: 'wrap' }}>+973</CInputGroupText>
@@ -232,44 +258,46 @@ const Register = () => {
                     />
                   </CInputGroup>
 
-                  <CInputGroup className="mb-3">
-                    <CInputGroupText style={{ textWrap: 'wrap' }}>
-                      <CIcon icon={cilLibraryBuilding} />
-                    </CInputGroupText>
-                    <CFormSelect
-                      aria-label="Default select example"
-                      name="school"
-                      value={formData.school}
-                      onChange={handleChange}
-                    >
-                      <option>Select your school below</option>
-                      <option value="AIS">AlNaseem International School</option>
-                      <option value="AS">Alhussan School</option>
-                      <option value="ASoB">American School of Bahrain</option>
-                      <option value="APGS">Arabian Pearl Gulf School</option>
-                      <option value="AKIS">Abdulrahman Kanoo International School</option>
-                      <option value="AHIS">Al Hekma International School</option>
-                      <option value="AIMANS">Al Iman School</option>
-                      <option value="ANIS">Alnoor International School</option>
-                      <option value="ARPS">Al Rawabi Private School</option>
-                      <option value="BSoB">British School of Bahrain</option>
-                      <option value="BBS">Bahrain Bayan School</option>
-                      <option value="BPS">Beacon Private School</option>
-                      <option value="BIS">Britus International School</option>
-                      <option value="CSB">Canadian School Bahrain</option>
-                      <option value="CPS">Creativity Private School</option>
-                      <option value="HIS">Hawar International School</option>
-                      <option value="IKNS">Ibn Khuldoon National School</option>
-                      <option value="MKS">Modern Knowledge Schools</option>
-                      <option value="NMS">New Millennium School</option>
-                      <option value="OIS">Orbit International School</option>
-                      <option value="RVIS">Riffa Views International School</option>
-                      <option value="SCS">St Christopher's School</option>
-                      <option value="SHGS">Shaikha Hissa Girls School</option>
-                      <option value="TIS">The Indian School</option>
-                      <option value="TISoC">The International School of Choueifat</option>
-                    </CFormSelect>
-                  </CInputGroup>
+                  {["Security", "Runner"].indexOf(type) != -1 && (
+                    <CInputGroup className="mb-3">
+                      <CInputGroupText style={{ textWrap: 'wrap' }}>
+                        <CIcon icon={cilLibraryBuilding} />
+                      </CInputGroupText>
+                      <CFormSelect
+                        aria-label="Default select example"
+                        name="school"
+                        value={formData.school}
+                        onChange={handleChange}
+                      >
+                        <option>Select your school below</option>
+                        <option value="AIS">AlNaseem International School</option>
+                        <option value="AS">Alhussan School</option>
+                        <option value="ASoB">American School of Bahrain</option>
+                        <option value="APGS">Arabian Pearl Gulf School</option>
+                        <option value="AKIS">Abdulrahman Kanoo International School</option>
+                        <option value="AHIS">Al Hekma International School</option>
+                        <option value="AIMANS">Al Iman School</option>
+                        <option value="ANIS">Alnoor International School</option>
+                        <option value="ARPS">Al Rawabi Private School</option>
+                        <option value="BSoB">British School of Bahrain</option>
+                        <option value="BBS">Bahrain Bayan School</option>
+                        <option value="BPS">Beacon Private School</option>
+                        <option value="BIS">Britus International School</option>
+                        <option value="CSB">Canadian School Bahrain</option>
+                        <option value="CPS">Creativity Private School</option>
+                        <option value="HIS">Hawar International School</option>
+                        <option value="IKNS">Ibn Khuldoon National School</option>
+                        <option value="MKS">Modern Knowledge Schools</option>
+                        <option value="NMS">New Millennium School</option>
+                        <option value="OIS">Orbit International School</option>
+                        <option value="RVIS">Riffa Views International School</option>
+                        <option value="SCS">St Christopher's School</option>
+                        <option value="SHGS">Shaikha Hissa Girls School</option>
+                        <option value="TIS">The Indian School</option>
+                        <option value="TISoC">The International School of Choueifat</option>
+                      </CFormSelect>
+                    </CInputGroup>
+                  )}
 
                   <CInputGroupText style={{ textWrap: 'wrap' }}>
                     Amount of MUN experiences and awards (if any):
