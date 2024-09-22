@@ -205,7 +205,7 @@ const Register = () => {
                   </CInputGroup>
 
 
-                  <p className="text-body-secondary" dangerouslySetInnerHTML={{ __html: description_dictionary[type] }}></p>
+                  <p className="text-body-secondary" dangerouslySetInnerHTML={{ __html: message_desciption[type] }}></p>
 
                   <CInputGroup className="mb-3">
                     <CInputGroupText style={{ textWrap: 'wrap' }}>+973</CInputGroupText>
