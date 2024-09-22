@@ -121,8 +121,8 @@ const Register = () => {
       const csrf = await api.get('api/csrf')
       //setCsrfToken(csrf.data.csrfToken);
 
-      const gradeLevel_temp = formData.gradeLevel
-      const school_temp = formData.school
+      var gradeLevel_temp = formData.gradeLevel
+      var school_temp = formData.school
 
       if (gradeLevel_temp === '') {
         gradeLevel_temp = '12'
