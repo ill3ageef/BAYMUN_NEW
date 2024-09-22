@@ -258,7 +258,7 @@ const Register = () => {
                     />
                   </CInputGroup>
 
-                  {["Security", "Runner"].indexOf(type) != -1 && (
+                  {["Security", "Runner"].indexOf(type) === -1 && (
                     <CInputGroup className="mb-3">
                       <CInputGroupText style={{ textWrap: 'wrap' }}>
                         <CIcon icon={cilLibraryBuilding} />
