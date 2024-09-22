@@ -146,7 +146,7 @@ const Register = () => {
         { headers: { 'X-CSRFToken': csrf.data.csrfToken } },
       )
 
-      if (['Chair', 'Security', 'Press', "Runner"].indexOf(type) != -1) {
+      if (['Chair', 'Security', 'Press', 'Runner'].indexOf(type) != -1) {
         navigate('/success')
       } else {
         const number = res.data.id
@@ -258,7 +258,7 @@ const Register = () => {
                     />
                   </CInputGroup>
 
-                  {["Security", "Runner"].indexOf(type) === -1 && (
+                  {['Security', 'Runner'].indexOf(type) === -1 && (
                     <CInputGroup className="mb-3">
                       <CInputGroupText style={{ textWrap: 'wrap' }}>
                         <CIcon icon={cilLibraryBuilding} />
@@ -593,7 +593,7 @@ const Register = () => {
                         ></CFormTextarea>
                       </CInputGroup>
 
-                      <CInputGroupText style={{ textWrap: 'wrap' }}>
+                      {/* <CInputGroupText style={{ textWrap: 'wrap' }}>
                         Upload 4 photos (preferably past MUN photos)
                       </CInputGroupText>
                       <CInputGroup className="mb-3">
@@ -601,7 +601,9 @@ const Register = () => {
                           <CIcon icon={cilImage} />
                         </CInputGroupText>
                         <CFormInput type="file" id="formFileMultiple" multiple />
-                      </CInputGroup>
+                      </CInputGroup> */}
+
+                      <p className="text-body-secondary">Note: Please email <b>4</b> photos as part of your application to <b>baymun@bayanschool.edu.bh</b></p>
                     </>
                   )}
 
