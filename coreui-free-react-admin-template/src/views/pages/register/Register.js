@@ -105,21 +105,30 @@ const Register = () => {
     e.preventDefault()
 
     try {
-      const csrf = await api.get("api/csrf");
+      const csrf = await api.get('api/csrf')
       //setCsrfToken(csrf.data.csrfToken);
-      const res = await api.post('api/user_info/register/', {
-        role: formData.role,
-        fullName: formData.fullName,
-        email: formData.email,
-        gradeLevel: formData.gradeLevel,
-        phone: formData.phone,
-        cpr: formData.cpr,
-        school: formData.school,
-        additional_data: formData.additional_data,
-      }, {headers: {"X-CSRFToken": csrf.data.csrfToken}})
-      const number = res.data.id
-      const padded_id = number.toString().padStart(4, '0')
-      navigate('/confirm?id=' + padded_id)
+      const res = await api.post(
+        'api/user_info/register/',
+        {
+          role: formData.role,
+          fullName: formData.fullName,
+          email: formData.email,
+          gradeLevel: formData.gradeLevel,
+          phone: formData.phone,
+          cpr: formData.cpr,
+          school: formData.school,
+          additional_data: formData.additional_data,
+        },
+        { headers: { 'X-CSRFToken': csrf.data.csrfToken } },
+      )
+
+      if (['Chair', 'Security', 'Press'].indexOf(type) != -1) {
+        navigate("/success")
+      } else {
+        const number = res.data.id
+        const padded_id = number.toString().padStart(4, '0')
+        navigate('/confirm?id=' + padded_id)
+      }
     } catch (error) {
       alert(error)
     }
@@ -186,8 +195,9 @@ const Register = () => {
                     </CFormSelect>
                   </CInputGroup>
 
-              
-                    <p className="text-body-secondary">Note: Grades 9-12 only! (and 8th graders from BBS)</p>
+                  <p className="text-body-secondary">
+                    Note: Grades 9-12 only! (and 8th graders from BBS)
+                  </p>
 
                   <CInputGroup className="mb-3">
                     <CInputGroupText style={{ textWrap: 'wrap' }}>+973</CInputGroupText>
