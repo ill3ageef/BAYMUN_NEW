@@ -213,7 +213,7 @@ const Register = () => {
                           onChange={handleChange}
                         >
                           <option>Select your grade level below</option>
-                          {['Chair', 'Press'].indexOf(type) === -1 && (
+                          {['Chair', 'Runner'].indexOf(type) === -1 && (
                             <>
                               <option value="8">Grade 8 - Only for Bayan Students</option>
                               <option value="9">Grade 9</option>
