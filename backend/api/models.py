@@ -63,7 +63,7 @@ class User(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
 
 
 class UserInfo(models.Model):
-    role = models.CharField(max_length=150, choices=[('Delegate', 'Delegate'), ('Chair', 'Chair'), ('Security', 'Security')])
+    role = models.CharField(max_length=150, choices=[('Delegate', 'Delegate'), ('Chair', 'Chair'), ('Security', 'Security'), ('Runner', 'Runner'), ('Press', 'Press')])
     fullName = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     gradeLevel = models.CharField(max_length=100)
@@ -93,7 +93,7 @@ class UserInfo(models.Model):
             ("can_view_runner", "Can view runner info"),
             ("can_edit_runner", "Can edit runner info"),
             ("can_delete_runner", "Can delete runner info"),
-            
+
             ("can_view_press", "Can view press info"),
             ("can_edit_press", "Can edit press info"),
             ("can_delete_press", "Can delete press info"),
