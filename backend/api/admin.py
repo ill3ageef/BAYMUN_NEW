@@ -85,10 +85,16 @@ class UserInfoAdmin(admin.ModelAdmin):
 
     def baymun_id(self, obj):
         return f"BAYMUN2411{obj.id:04d}"
+    
+    def council_language(self, obj):
+        if obj.role == 'Chair' and 'cha_3' in obj.additional_data:
+            return obj.additional_data.get('cha_3')
+        return ''
 
     baymun_id.short_description = "Trans. ID"
+    council_language.short_description = "Council Lang."
 
-    list_display = ('id', 'baymun_id', 'fullName', 'role', 'email', 'gradeLevel', 'school', 'phone', 'has_payed')
+    list_display = ('id', 'baymun_id', 'fullName', 'role', 'email', 'gradeLevel', 'school', 'phone', 'council_language', 'has_payed')
     list_filter = ('role', 'gradeLevel', 'school')
     list_editable = ("has_payed",)
     
