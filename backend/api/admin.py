@@ -38,6 +38,8 @@ class UserInfoAdmin(admin.ModelAdmin):
             filters.append('Security')
         if user.has_perm('api.can_view_press'):
             filters.append('Press')
+        if user.has_perm('api.can_view_runner'):
+            filters.append('Runner')
         if filters:
             return qs.filter(role__in=filters)
         return qs.none()
@@ -54,6 +56,8 @@ class UserInfoAdmin(admin.ModelAdmin):
             if user.has_perm('api.can_edit_security') and obj.role == 'Security':
                 return True
             if user.has_perm('api.can_edit_press') and obj.role == 'Press':
+                return True
+            if user.has_perm('api.can_edit_runner') and obj.role == 'Press':
                 return True
         return False
 
@@ -73,6 +77,8 @@ class UserInfoAdmin(admin.ModelAdmin):
             if user.has_perm('api.can_delete_security') and obj.role == 'Security':
                 return True
             if user.has_perm('api.can_delete_press') and obj.role == 'Press':
+                return True
+            if user.has_perm('api.can_delete_runner') and obj.role == 'Press':
                 return True
         return False
     
