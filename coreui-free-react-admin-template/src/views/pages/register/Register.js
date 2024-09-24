@@ -27,7 +27,7 @@ import {
   cilLockLocked,
   cilUser,
   cilFingerprint,
-  cilImage,
+  cilLanguage,
 } from '@coreui/icons'
 import { useSearchParams } from 'react-router-dom'
 
@@ -60,6 +60,7 @@ const Register = () => {
       sec_4: '',
       run_1: '',
       run_2: '',
+      run_3: '',
       cha_1: '',
       cha_2: '',
       cha_3: '',
@@ -67,6 +68,7 @@ const Register = () => {
       del_2: '',
       del_3: '',
       del_4: '',
+      del_5: '',
       pre_1: '',
       pre_2: '',
       pre_3: '',
@@ -213,7 +215,7 @@ const Register = () => {
                           onChange={handleChange}
                         >
                           <option>Select your grade level below</option>
-                          {['Chair', 'Runner', "Press"].indexOf(type) === -1 && (
+                          {['Chair', 'Runner', 'Press'].indexOf(type) === -1 && (
                             <>
                               <option value="8">Grade 8 - Only for Bayan Students</option>
                               <option value="9">Grade 9</option>
@@ -469,17 +471,20 @@ const Register = () => {
                         ></CFormTextarea>
                       </CInputGroup>
 
-                      <CInputGroupText style={{ textWrap: 'wrap' }}>
-                        Would you like to chair an Arabic or English council?
-                      </CInputGroupText>
                       <CInputGroup className="mb-3">
-                        <CFormTextarea
+                        <CInputGroupText style={{ textWrap: 'wrap' }}>
+                          <CIcon icon={cilLanguage} />
+                        </CInputGroupText>
+                        <CFormSelect
+                          aria-label="Default select example"
                           name="cha_3"
-                          placeholder="Answer here..."
-                          rows={2}
                           value={formData.additional_data.cha_3}
                           onChange={handleChange}
-                        ></CFormTextarea>
+                        >
+                          <option>Select your langauge below</option>
+                          <option value="EN">English</option>
+                          <option value="AR">Arabic</option>
+                        </CFormSelect>
                       </CInputGroup>
                     </>
                   )}
@@ -510,6 +515,22 @@ const Register = () => {
                           value={formData.additional_data.del_2}
                           onChange={handleChange}
                         ></CFormTextarea>
+                      </CInputGroup>
+
+                      <CInputGroup className="mb-3">
+                        <CInputGroupText style={{ textWrap: 'wrap' }}>
+                          <CIcon icon={cilLanguage} />
+                        </CInputGroupText>
+                        <CFormSelect
+                          aria-label="Default select example"
+                          name="del_5"
+                          value={formData.additional_data.del_5}
+                          onChange={handleChange}
+                        >
+                          <option>Select your langauge below</option>
+                          <option value="EN">English</option>
+                          <option value="AR">Arabic</option>
+                        </CFormSelect>
                       </CInputGroup>
 
                       <CInputGroup className="mb-3">
@@ -604,7 +625,10 @@ const Register = () => {
                         <CFormInput type="file" id="formFileMultiple" multiple />
                       </CInputGroup> */}
 
-                      <p className="text-body-secondary">Note: Please email <b>4</b> photos (try to add MUN photos if you have any) to <a href='mailto: baymun@bayanschool.edu.bh'>baymun@bayanschool.edu.bh</a></p>
+                      <p className="text-body-secondary">
+                        Note: Please email <b>4</b> photos (try to add MUN photos if you have any)
+                        to <a href="mailto: baymun@bayanschool.edu.bh">baymun@bayanschool.edu.bh</a>
+                      </p>
                     </>
                   )}
 
