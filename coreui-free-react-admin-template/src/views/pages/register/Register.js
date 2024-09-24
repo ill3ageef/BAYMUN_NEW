@@ -481,7 +481,7 @@ const Register = () => {
                           value={formData.additional_data.cha_3}
                           onChange={handleChange}
                         >
-                          <option>Select your langauge below</option>
+                          <option>Select the preferred language for your council</option>
                           <option value="EN">English</option>
                           <option value="AR">Arabic</option>
                         </CFormSelect>
@@ -527,7 +527,7 @@ const Register = () => {
                           value={formData.additional_data.del_5}
                           onChange={handleChange}
                         >
-                          <option>Select your langauge below</option>
+                          <option>Select the prefered language for your council</option>
                           <option value="EN">English</option>
                           <option value="AR">Arabic</option>
                         </CFormSelect>
