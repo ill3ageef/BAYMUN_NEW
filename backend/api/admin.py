@@ -89,6 +89,8 @@ class UserInfoAdmin(admin.ModelAdmin):
     def council_language(self, obj):
         if obj.role == 'Chair' and 'cha_3' in obj.additional_data:
             return obj.additional_data.get('cha_3')
+        if obj.role == 'Delegate' and 'del_5' in obj.additional_data:
+            return obj.aditional_data.get('del_5')
         return ''
 
     baymun_id.short_description = "Trans. ID"
