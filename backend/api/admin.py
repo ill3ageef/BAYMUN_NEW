@@ -2,6 +2,28 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import UserInfo, User
 
+
+SCHOOL_NAME_REPLACEMENTS = {
+        "AKIS": "ARKIS",
+    }
+
+
+class CustomSchoolFilter(admin.SimpleListFilter):
+    title = 'School'
+    parameter_name = 'school'
+
+    
+
+    def lookups(self, request, model_admin):
+        schools = set(UserInfo.objects.values_list('school', flat=True))
+        return [(school, SCHOOL_NAME_REPLACEMENTS.get(school, school)) for school in schools]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(school=self.value())
+        return queryset
+
+
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
     list_display = ('id', 'email', 'first_name', 'last_name', 'is_staff', 'is_superuser')
@@ -94,12 +116,9 @@ class UserInfoAdmin(admin.ModelAdmin):
         return ''
     
     
-    SCHOOL_NAME_REPLACEMENTS = {
-        "AKIS": "ARKIS",
-    }
     
     def school_changed(self, obj):
-        return self.SCHOOL_NAME_REPLACEMENTS.get(obj.school, obj.school)
+        return SCHOOL_NAME_REPLACEMENTS.get(obj.school, obj.school)
     
 
     baymun_id.short_description = "Trans. ID"
@@ -107,7 +126,7 @@ class UserInfoAdmin(admin.ModelAdmin):
     school_changed.short_description = "School"
 
     list_display = ('id', 'baymun_id', 'fullName', 'role', 'email', 'gradeLevel', 'school_changed', 'phone', 'council_language', 'has_payed')
-    list_filter = ('role', 'gradeLevel', 'school')
+    list_filter = ('role', 'gradeLevel', CustomSchoolFilter)
     list_editable = ("has_payed",)
     
     search_fields = ('has_payed','fullName', 'email', 'phone', 'cpr')
