@@ -92,11 +92,21 @@ class UserInfoAdmin(admin.ModelAdmin):
         if obj.role == 'Delegate' and 'del_5' in obj.additional_data:
             return obj.additional_data.get('del_5')
         return ''
+    
+    
+    SCHOOL_NAME_REPLACEMENTS = {
+        "AKIS": "ARKIS",
+    }
+    
+    def school_changed(self, obj):
+        return self.SCHOOL_NAME_REPLACEMENTS.get(obj.school, obj.school)
+    
 
     baymun_id.short_description = "Trans. ID"
     council_language.short_description = "Council Lang."
+    school_changed.short_description = "School"
 
-    list_display = ('id', 'baymun_id', 'fullName', 'role', 'email', 'gradeLevel', 'school', 'phone', 'council_language', 'has_payed')
+    list_display = ('id', 'baymun_id', 'fullName', 'role', 'email', 'gradeLevel', 'school_changed', 'phone', 'council_language', 'has_payed')
     list_filter = ('role', 'gradeLevel', 'school')
     list_editable = ("has_payed",)
     
