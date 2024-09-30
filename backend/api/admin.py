@@ -107,7 +107,7 @@ class UserInfoAdmin(admin.ModelAdmin):
     school_changed.short_description = "School"
 
     list_display = ('id', 'baymun_id', 'fullName', 'role', 'email', 'gradeLevel', 'school_changed', 'phone', 'council_language', 'has_payed')
-    list_filter = ('role', 'gradeLevel', 'school')
+    list_filter = ('role', 'gradeLevel', 'school_changed')
     list_editable = ("has_payed",)
     
     search_fields = ('has_payed','fullName', 'email', 'phone', 'cpr')
