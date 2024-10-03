@@ -272,6 +272,7 @@ const Register = () => {
                         onChange={handleChange}
                       >
                         <option>Select your school below</option>
+                        <option value="AH">Ahlia School</option>
                         <option value="AIS">AlNaseem International School</option>
                         <option value="ARS">Al Raja School</option>
                         <option value="AS">Alhussan School</option>
@@ -282,19 +283,20 @@ const Register = () => {
                         <option value="AIMANS">Al Iman School</option>
                         <option value="ANIS">Alnoor International School</option>
                         <option value="ARPS">Al Rawabi Private School</option>
-                        <option value="BSoB">British School of Bahrain</option>
                         <option value="BBS">Bahrain Bayan School</option>
                         <option value="BPS">Beacon Private School</option>
+                        <option value="BSoB">British School of Bahrain</option>
                         <option value="BIS">Britus International School</option>
                         <option value="CSB">Canadian School Bahrain</option>
                         <option value="CPS">Creativity Private School</option>
                         <option value="HIS">Hawar International School</option>
                         <option value="IKNS">Ibn Khuldoon National School</option>
                         <option value="MKS">Modern Knowledge Schools</option>
-                        <option value="NMS">New Millennium School</option>
                         <option value="NVTC">Nasser Vocational Training Centre</option>
+                        <option value="NMS">New Millennium School</option>
                         <option value="OIS">Orbit International School</option>
                         <option value="RVIS">Riffa Views International School</option>
+                        <option value="SHS">Sacred Heart School</option>
                         <option value="SCS">St Christopher's School</option>
                         <option value="SHGS">Shaikha Hissa Girls School</option>
                         <option value="TIS">The Indian School</option>
