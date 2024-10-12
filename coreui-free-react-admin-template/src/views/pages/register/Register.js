@@ -293,6 +293,7 @@ const Register = () => {
                         <option value="HIS">Hawar International School</option>
                         <option value="IKNS">Ibn Khuldoon National School</option>
                         <option value="MKS">Modern Knowledge Schools</option>
+                        <option value="MSGS">Muharraq Secondary Girls School</option>
                         <option value="NVTC">Nasser Vocational Training Centre</option>
                         <option value="NMS">New Millennium School</option>
                         <option value="OIS">Orbit International School</option>
