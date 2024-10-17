@@ -38,8 +38,14 @@ const Register = () => {
 
   const acceptedTypes = ['Delegate', 'Security', 'Press', 'Chair', 'Runner']
 
+  const opened_registerations = ['Delegate', 'Press', 'Chair']
+
   if (acceptedTypes.indexOf(type) === -1) {
     navigate('/404')
+  }
+
+  if (opened_registerations.indexOf(type) === -1) {
+    navigate('/closed')
   }
 
   const [formData, setFormData] = useState({

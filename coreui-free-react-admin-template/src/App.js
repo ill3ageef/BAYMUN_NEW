@@ -15,6 +15,7 @@ const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
 const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
 const Success = React.lazy(() => import('./views/pages/Success'))
 const Confirm = React.lazy(() => import('./views/pages/Confirm'))
+const Closed = React.lazy(() => import('./views/pages/Reg_closed.js'))
 
 const App = () => {
   const { isColorModeSet, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
@@ -51,15 +52,16 @@ const App = () => {
           <Route exact path="/404" name="Page 404" element={<Page404 />} />
           <Route exact path="/300" name="Page 500" element={<Page500 />} />
           <Route exact path="/500" name="Page 500" element={<Page500 />} />
+          <Route exact path="/closed" name="Registrations Closed" element={<Closed />} />
 
 
     
           <Route path="*" element={<Navigate to="/register?type=RGVsZWdhdGUK" replace />} />
           <Route path="/register/delegate/" element={<Navigate to="/register?type=RGVsZWdhdGUK" replace />} />
-          <Route path="/register/security/" element={<Navigate to="/register?type=U2VjdXJpdHk" replace />} />
+          <Route path="/register/security/" element={<Navigate to="/closed" replace />} />
           <Route path="/register/press/" element={<Navigate to="/register?type=UHJlc3M" replace />} />
           <Route path="/register/chair/" element={<Navigate to="/register?type=Q2hhaXI" replace />} />
-          <Route path="/register/runner/" element={<Navigate to="/register?type=UnVubmVy" replace />} />
+          <Route path="/register/runner/" element={<Navigate to="/closed" replace />} />
         </Routes>
       </Suspense>
     </HashRouter>
