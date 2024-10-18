@@ -1,7 +1,6 @@
 import csv
 import json
 from django.contrib import admin
-from collections import OrderedDict
 from django.http import HttpResponse
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import UserInfo, User
@@ -20,23 +19,19 @@ class ExportCsvMixin:
         # JSON field name
         json_field_name = 'additional_data'
 
-        # Collect all possible JSON keys across the queryset in an ordered manner
-        json_keys = OrderedDict()
+        # Collect all possible JSON keys across the queryset
+        json_keys = set()
         for obj in queryset:
             json_data = getattr(obj, json_field_name, {})
             if json_data:
                 try:
                     json_data = json.loads(json_data)  # Ensure the JSON is parsed properly
                 except (TypeError, ValueError):
-                    continue  # Skip if it's already a dictionary or invalid
-                
-                # Update the ordered dictionary with JSON keys
-                for key in json_data.keys():
-                    if key not in json_keys:
-                        json_keys[key] = None  # Use None as a placeholder for now
+                    pass  # If it's already a dictionary or invalid, skip the parsing
+                json_keys.update(json_data.keys())
 
-        # Add JSON keys as separate columns to field_names in ordered fashion
-        field_names.extend(json_keys.keys())
+        # Add JSON keys as separate columns
+        field_names.extend(json_keys)
 
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = f'attachment; filename={meta}.csv'
@@ -48,7 +43,6 @@ class ExportCsvMixin:
         # Write the data rows
         for obj in queryset:
             row = []
-
             # Add normal field values
             for field in meta.fields:
                 row.append(getattr(obj, field.name))
@@ -60,7 +54,7 @@ class ExportCsvMixin:
             except (TypeError, ValueError):
                 pass
 
-            for key in json_keys.keys():
+            for key in json_keys:
                 row.append(json_data.get(key, ''))  # Fill missing keys with an empty string
 
             writer.writerow(row)
