@@ -1,4 +1,6 @@
+import csv
 from django.contrib import admin
+from django.http import HttpResponse
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import UserInfo, User
 
@@ -6,6 +8,25 @@ from .models import UserInfo, User
 SCHOOL_NAME_REPLACEMENTS = {
         "AKIS": "ARKIS",
     }
+
+
+class ExportCsvMixin:
+    def export_as_csv(self, request, queryset):
+
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
+
+    export_as_csv.short_description = "Export Selected"
 
 
 class CustomSchoolFilter(admin.SimpleListFilter):
@@ -46,7 +67,7 @@ class UserAdmin(BaseUserAdmin):
     )
 
 @admin.register(UserInfo)
-class UserInfoAdmin(admin.ModelAdmin):
+class UserInfoAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -128,6 +149,8 @@ class UserInfoAdmin(admin.ModelAdmin):
     list_display = ('id', 'baymun_id', 'fullName', 'role', 'email', 'gradeLevel', 'school_changed', 'phone', 'council_language', 'has_payed')
     list_filter = ('role', 'gradeLevel', CustomSchoolFilter)
     list_editable = ("has_payed",)
+
+    actions = ["export_as_csv"]
     
     search_fields = ('has_payed','fullName', 'email', 'phone', 'cpr')
 
