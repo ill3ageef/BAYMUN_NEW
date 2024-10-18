@@ -291,6 +291,7 @@ const Register = () => {
                         <option value="ARPS">Al Rawabi Private School</option>
                         <option value="BBS">Bahrain Bayan School</option>
                         <option value="BGS">Bayan Gardens School</option>
+                        <option value="BIGS">Busaiteen Intermediate Girls School</option>
                         <option value="BPS">Beacon Private School</option>
                         <option value="BSoB">British School of Bahrain</option>
                         <option value="BIS">Britus International School</option>
@@ -308,6 +309,7 @@ const Register = () => {
                         <option value="SHS">Sacred Heart School</option>
                         <option value="SCS">St Christopher's School</option>
                         <option value="SHGS">Shaikha Hissa Girls School</option>
+                        <option value="SMCS">Shaikha Moza Comprehensive Girls School</option>
                         <option value="TIS">The Indian School</option>
                         <option value="TISoC">The International School of Choueifat</option>
                       </CFormSelect>
