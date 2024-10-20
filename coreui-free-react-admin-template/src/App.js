@@ -54,14 +54,27 @@ const App = () => {
           <Route exact path="/500" name="Page 500" element={<Page500 />} />
           <Route exact path="/closed" name="Registrations Closed" element={<Closed />} />
 
-
-    
           <Route path="*" element={<Navigate to="/register?type=RGVsZWdhdGUK" replace />} />
-          <Route path="/register/delegate/" element={<Navigate to="/register?type=RGVsZWdhdGUK" replace />} />
-          <Route path="/register/security/" element={<Navigate to="/closed" replace />} />
-          <Route path="/register/press/" element={<Navigate to="/register?type=UHJlc3M" replace />} />
-          <Route path="/register/chair/" element={<Navigate to="/register?type=Q2hhaXI" replace />} />
-          <Route path="/register/runner/" element={<Navigate to="/closed" replace />} />
+          <Route
+            path="/register/delegate/"
+            element={<Navigate to="/register?type=RGVsZWdhdGUK" replace />}
+          />
+          <Route
+            path="/register/security/"
+            element={<Navigate to="/register?type=U2VjdXJpdHk" replace />}
+          />
+          <Route
+            path="/register/press/"
+            element={<Navigate to="/register?type=UHJlc3M" replace />}
+          />
+          <Route
+            path="/register/chair/"
+            element={<Navigate to="/register?type=Q2hhaXI" replace />}
+          />
+          <Route
+            path="/register/runner/"
+            element={<Navigate to="/register?type=UnVubmVyIA" replace />}
+          />
         </Routes>
       </Suspense>
     </HashRouter>

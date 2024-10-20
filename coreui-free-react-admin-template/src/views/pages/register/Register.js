@@ -14,7 +14,7 @@ import {
   CFormTextarea,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import api from '../../../api'
 import { useNavigate } from 'react-router-dom'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../../constants'
@@ -38,15 +38,17 @@ const Register = () => {
 
   const acceptedTypes = ['Delegate', 'Security', 'Press', 'Chair', 'Runner']
 
-  const opened_registerations = ['Delegate', 'Press', 'Chair']
+  const opened_registerations = ['Delegate']
 
-  if (acceptedTypes.indexOf(type) === -1) {
-    navigate('/404')
-  }
+  useEffect(() => {
+    if (acceptedTypes.indexOf(type) === -1) {
+      navigate('/404')
+    }
 
-  if (opened_registerations.indexOf(type) === -1) {
-    navigate('/closed')
-  }
+    if (opened_registerations.indexOf(type) === -1) {
+      navigate('/closed')
+    }
+  }, [navigate])
 
   const [formData, setFormData] = useState({
     role: type,
