@@ -289,6 +289,7 @@ const Register = () => {
                         <option value="AKIS">Abdulrahman Kanoo International School</option>
                         <option value="AHIS">Al Hekma International School</option>
                         <option value="AIMANS">Al Iman School</option>
+                        <option value="AMIS">Al Majid International School</option>
                         <option value="ANIS">Alnoor International School</option>
                         <option value="ARPS">Al Rawabi Private School</option>
                         <option value="BBS">Bahrain Bayan School</option>
