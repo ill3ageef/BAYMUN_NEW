@@ -290,6 +290,7 @@ const Register = () => {
                         <option value="AMIS">Al-Majd International School</option>
                         <option value="ARS">Al Raja School</option>
                         <option value="ARPS">Al Rawabi Private School</option>
+                        <option value="AWS">Al Wisam School</option>
                         <option value="ASoB">American School of Bahrain</option>
                         <option value="APGS">Arabian Pearl Gulf School</option>
                         <option value="BBS">Bahrain Bayan School</option>
