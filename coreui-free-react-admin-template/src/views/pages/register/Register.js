@@ -38,7 +38,7 @@ const Register = () => {
 
   const acceptedTypes = ['Delegate', 'Security', 'Press', 'Chair', 'Runner']
 
-  const opened_registerations = ['Delegate']
+  const opened_registerations = []
 
   useEffect(() => {
     if (acceptedTypes.indexOf(type) === -1) {
